@@ -34,6 +34,10 @@ export class ProjectManager {
     }
 
     deleteProject(deleteId) {
-        this.setProjectList(projectList.filter(project => project.getId() !== deleteId));
+        this.setProjectList(this.getProjectList().filter(project => project.getId() !== deleteId));
+    }
+
+    addProject(newProject) {
+        this.setProjectList([...this.getProjectList(), newProject]);
     }
 }
