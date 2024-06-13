@@ -1,3 +1,5 @@
+import generateId from "./id";
+
 export default class Project {
     constructor (title) {
         this._title = title;
