@@ -1,6 +1,6 @@
 import generateId from "./id";
 
-export default class Project {
+export class Project {
     constructor (title) {
         this._title = title;
         this._todos = [];
@@ -13,5 +13,27 @@ export default class Project {
 
     setTitle(title) {
         this._title = title;
+    }
+
+    getId() {
+        return this._id;
+    }
+}
+
+export class ProjectManager {
+    constructor () {
+        this._projectList = [];
+    }
+
+    getProjectList() {
+        return this._projectList;
+    }
+
+    setProjectList(newList) {
+        this._projectList = newList;
+    }
+
+    deleteProject(deleteId) {
+        this.setProjectList(projectList.filter(project => project.getId() !== deleteId));
     }
 }
