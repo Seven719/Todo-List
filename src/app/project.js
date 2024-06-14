@@ -20,7 +20,7 @@ export class Project {
     }
 }
 
-export class ProjectManager {
+export class ProjectsManager {
     constructor () {
         this._projectList = [];
     }
