@@ -18,6 +18,22 @@ export class Project {
     getId() {
         return this._id;
     }
+
+    getTodoList() {
+        return this._todos;
+    }
+
+    setTodoList(newList) {
+        this._todos = newList;
+    }
+
+    deleteTodo(deleteId) {
+        this.setTodoList(this.getTodoList().filter(todo => todo.getId() !== deleteId));
+    }
+
+    addTodo(newTodo) {
+        this.setTodoList([...this.getTodoList(), newTodo]);
+    }
 }
 
 export class ProjectsManager {
