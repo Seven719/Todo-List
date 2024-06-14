@@ -7,32 +7,32 @@ export class Project {
         this._id = generateId();
     }
 
-    getTitle() {
+    get title() {
         return this._title;
     }
 
-    setTitle(title) {
-        this._title = title;
+    set title(value) {
+        this._title = value;
     }
 
-    getId() {
+    get id() {
         return this._id;
     }
 
-    getTodoList() {
+    get todoList() {
         return this._todos;
     }
 
-    setTodoList(newList) {
-        this._todos = newList;
+    set todoList(value) {
+        this._todos = value;
     }
 
-    deleteTodo(deleteId) {
-        this.setTodoList(this.getTodoList().filter(todo => todo.getId() !== deleteId));
+    deleteTodo(remove) {
+        this.todoList = this.todoList.filter(todo => todo.id !== remove.id);
     }
 
-    addTodo(newTodo) {
-        this.setTodoList([...this.getTodoList(), newTodo]);
+    addTodo(todo) {
+        this.todoList = [...this.todoList, todo];
     }
 }
 
@@ -41,19 +41,19 @@ export class ProjectsManager {
         this._projectList = [];
     }
 
-    getProjectList() {
+    get projectList() {
         return this._projectList;
     }
 
-    setProjectList(newList) {
-        this._projectList = newList;
+    set projectList(value) {
+        this._projectList = value;
     }
 
-    deleteProject(deleteId) {
-        this.setProjectList(this.getProjectList().filter(project => project.getId() !== deleteId));
+    deleteProject(remove) {
+        this.projectList = this.projectList.filter(project => project.id !== remove.id);
     }
 
-    addProject(newProject) {
-        this.setProjectList([...this.getProjectList(), newProject]);
+    addProject(project) {
+        this.projectList = [...this.projectList, project];
     }
 }
