@@ -1,11 +1,9 @@
 import { Project, ProjectsManager } from "../app/project";
-import Todo from "../app/todo";
-import { createTodo } from "./todo-ui";
+import { displayTodos } from "./todo-ui";
 
 const addProject = document.getElementById("button-add");
 const projectsList = document.getElementById("projects-list");
 const projectTitle = document.getElementById("project-title");
-const taskList = document.getElementById("task-list");
 
 const manageProjects = new ProjectsManager();
 
@@ -13,18 +11,16 @@ addProject.addEventListener('click', () => {
     createProject();
 });
 
-let createProject = () => {
-    let newProject = new Project("Untitled");
+const createProject = () => {
+    const newProject = new Project("Untitled");
     manageProjects.addProject(newProject);
-    projectsList.innerHTML = "";
-
-    displayProjects();
+    updateProjects();
 }
 
-let initProjectUI = (newProject) => {
-    let projectWrapper = document.createElement('li');
-    let project = document.createElement('button');
-    let title = document.createElement('p');
+const initProjectUI = (newProject) => {
+    const projectWrapper = document.createElement('li');
+    const project = document.createElement('button');
+    const title = document.createElement('p');
 
     projectWrapper.classList.add('project');
     title.textContent = newProject.title;
@@ -33,24 +29,15 @@ let initProjectUI = (newProject) => {
     projectWrapper.append(project);
     project.append(title);
 
-    return project;
+    project.addEventListener('click', () => displayProjectPage(newProject));
 }
 
-let displayProjects = () => {
-    manageProjects.projectList.forEach(newProject => {
-        let project = initProjectUI(newProject);
-
-        project.addEventListener('click', () => {
-            displayProjectPage(newProject);
-        })
-    });
+const updateProjects = () => {
+    projectsList.innerHTML = "";
+    manageProjects.projectList.forEach(initProjectUI);
 }
 
-let displayProjectPage = (project) => {
+const displayProjectPage = (project) => {
     projectTitle.textContent = project.title;
-    taskList.textContent = "";
-
-    project.todoList.forEach(todo => {
-        taskList.append(createTodo(todo));
-    });
+    displayTodos(project);
 }

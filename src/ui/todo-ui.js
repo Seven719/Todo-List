@@ -1,7 +1,9 @@
-export let createTodo = (todoItem) => {
-    let todo = document.createElement("div");
-    let checkbox = document.createElement("input");
-    let label = document.createElement("label");
+const taskList = document.getElementById("task-list");
+
+const createTodo = (todoItem) => {
+    const todo = document.createElement("div");
+    const checkbox = document.createElement("input");
+    const label = document.createElement("label");
 
     todo.classList.add("task");
     checkbox.type = "checkbox";
@@ -10,4 +12,12 @@ export let createTodo = (todoItem) => {
     todo.append(checkbox, label);
 
     return todo;
+}
+
+export const displayTodos = (project) => {
+    taskList.innerHTML = "";
+
+    project.todoList.forEach(todo => {
+        taskList.append(createTodo(todo));
+    });
 }
