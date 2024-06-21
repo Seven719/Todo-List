@@ -1,7 +1,6 @@
 import { Project, ProjectsManager } from "../app/project";
 import Todo from "../app/todo";
 import { createTodo } from "./todo-ui";
-import iconPlay from "../images/play.svg";
 
 const addProject = document.getElementById("button-add");
 const projectsList = document.getElementById("projects-list");
@@ -25,16 +24,14 @@ let createProject = () => {
 let initProjectUI = (newProject) => {
     let projectWrapper = document.createElement('li');
     let project = document.createElement('button');
-    let icon = document.createElement('img');
     let title = document.createElement('p');
 
     projectWrapper.classList.add('project');
     title.textContent = newProject.title;
-    icon.src = iconPlay;
 
     projectsList.append(projectWrapper);
     projectWrapper.append(project);
-    project.append(icon, title);
+    project.append(title);
 
     return project;
 }
