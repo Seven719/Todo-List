@@ -1,36 +1,59 @@
 import { Project, ProjectsManager } from "../app/project";
+import Todo from "../app/todo";
+import { createTodo } from "./todo-ui";
 import iconPlay from "../images/play.svg";
-
-const manageProjects = new ProjectsManager();
 
 const addProject = document.getElementById("button-add");
 const projectsList = document.getElementById("projects-list");
+const projectTitle = document.getElementById("project-title");
+const taskList = document.getElementById("task-list");
+
+const manageProjects = new ProjectsManager();
+
+addProject.addEventListener('click', () => {
+    createProject();
+});
 
 let createProject = () => {
     let newProject = new Project("Untitled");
     manageProjects.addProject(newProject);
     projectsList.innerHTML = "";
+
     displayProjects();
+}
+
+let initProjectUI = (newProject) => {
+    let projectWrapper = document.createElement('li');
+    let project = document.createElement('button');
+    let icon = document.createElement('img');
+    let title = document.createElement('p');
+
+    projectWrapper.classList.add('project');
+    title.textContent = newProject.title;
+    icon.src = iconPlay;
+
+    projectsList.append(projectWrapper);
+    projectWrapper.append(project);
+    project.append(icon, title);
+
+    return project;
 }
 
 let displayProjects = () => {
     manageProjects.projectList.forEach(newProject => {
-        let project = document.createElement('li');
-        let button = document.createElement('button');
-        let icon = document.createElement('img');
-        let title = document.createElement('p');
+        let project = initProjectUI(newProject);
 
-        project.classList.add('project');
-        title.textContent = newProject.title;
-        icon.src = iconPlay;
-        title.style.color = "grey";
-
-        projectsList.append(project);
-        project.append(button);
-        button.append(icon, title);
+        project.addEventListener('click', () => {
+            displayProjectPage(newProject);
+        })
     });
 }
 
-addProject.addEventListener('click', () => {
-    createProject();
-})
+let displayProjectPage = (project) => {
+    projectTitle.textContent = project.title;
+    taskList.textContent = "";
+
+    project.todoList.forEach(todo => {
+        taskList.append(createTodo(todo));
+    });
+}
