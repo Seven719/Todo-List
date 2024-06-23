@@ -30,6 +30,10 @@ const initProjectUI = (newProject) => {
     project.append(title);
 
     project.addEventListener('click', () => displayProjectPage(newProject));
+
+    projectTitle.addEventListener('input', () => {
+        title.textContent = newProject.title = projectTitle.textContent;
+    })
 }
 
 const updateProjects = () => {
