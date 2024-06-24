@@ -41,7 +41,7 @@ const updateProjects = () => {
     manageProjects.projectList.forEach(initProjectUI);
 }
 
-const displayProjectPage = (project) => {
+export const displayProjectPage = (project) => {
     projectTitle.textContent = project.title;
     displayTodos(project);
 }
