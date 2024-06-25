@@ -3,7 +3,7 @@ import { displayTodos } from "./todo-ui";
 
 const addProject = document.getElementById("button-add");
 const projectsList = document.getElementById("projects-list");
-const projectTitle = document.getElementById("project-title");
+let projectTitle = document.getElementById("project-title");
 
 const manageProjects = new ProjectsManager();
 
@@ -30,10 +30,6 @@ const initProjectUI = (newProject) => {
     project.append(title);
 
     project.addEventListener('click', () => displayProjectPage(newProject));
-
-    projectTitle.addEventListener('input', () => {
-        title.textContent = newProject.title = projectTitle.textContent;
-    })
 }
 
 const updateProjects = () => {
@@ -41,7 +37,22 @@ const updateProjects = () => {
     manageProjects.projectList.forEach(initProjectUI);
 }
 
+const renameProjectListener = (project) => {
+    const updateTitle = () => {
+        project.title = projectTitle.textContent;
+        updateProjects();
+        displayProjectPage(project);
+    };
+
+    const newProjectTitle = projectTitle.cloneNode(true);
+    projectTitle.parentNode.replaceChild(newProjectTitle, projectTitle);
+    projectTitle = newProjectTitle;
+
+    projectTitle.addEventListener('blur', updateTitle);
+}
+
 export const displayProjectPage = (project) => {
     projectTitle.textContent = project.title;
+    renameProjectListener(project);
     displayTodos(project);
 }
