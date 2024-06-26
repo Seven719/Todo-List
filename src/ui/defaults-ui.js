@@ -18,3 +18,5 @@ manageProjects.addProject(weekProject);
 inbox.addEventListener('click', () => displayProjectPage(inboxProject));
 today.addEventListener('click', () => displayProjectPage(todayProject));
 week.addEventListener('click', () => displayProjectPage(weekProject));
+
+displayProjectPage(inboxProject);
