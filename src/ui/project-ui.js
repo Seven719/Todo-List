@@ -1,7 +1,7 @@
 import { Project, ProjectsManager } from "../app/project";
 import { displayTodos } from "./todo-ui";
 
-const addProject = document.getElementById("button-add");
+const addProject = document.getElementById("button-add-project");
 const projectsList = document.getElementById("projects-list");
 let projectTitle = document.getElementById("project-title");
 
