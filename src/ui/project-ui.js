@@ -38,6 +38,13 @@ const updateProjects = () => {
 }
 
 const renameProjectListener = (project) => {
+    projectTitle.contentEditable = true;
+
+    if (project.title == "Inbox" || project.title == "Today" || project.title == "This Week") {
+        projectTitle.contentEditable = false;
+        return
+    }
+
     const updateTitle = () => {
         project.title = projectTitle.textContent;
         updateProjects();
