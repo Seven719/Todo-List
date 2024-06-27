@@ -1,5 +1,6 @@
 import { Project, ProjectsManager } from "../app/project";
 import { displayTodos } from "./todo-ui";
+import Trash from "../images/trash.svg"
 
 const addProject = document.getElementById("button-add-project");
 const projectsList = document.getElementById("projects-list");
@@ -21,15 +22,19 @@ const initProjectUI = (newProject) => {
     const projectWrapper = document.createElement('li');
     const project = document.createElement('button');
     const title = document.createElement('p');
+    const deleteBtn = document.createElement('img')
 
+    deleteBtn.src = Trash
+    deleteBtn.classList.add('delete-button')
     projectWrapper.classList.add('project');
     title.textContent = newProject.title;
 
     projectsList.append(projectWrapper);
     projectWrapper.append(project);
-    project.append(title);
+    project.append(title, deleteBtn);
 
     project.addEventListener('click', () => displayProjectPage(newProject));
+    deleteBtn.addEventListener('click', () => deleteProject(newProject, projectWrapper))
 }
 
 const updateProjects = () => {
@@ -56,6 +61,11 @@ const renameProjectListener = (project) => {
     projectTitle = newProjectTitle;
 
     projectTitle.addEventListener('blur', updateTitle);
+}
+
+const deleteProject = (project, projectWrapper) => {
+    manageProjects.deleteProject(project);
+    projectsList.removeChild(projectWrapper)
 }
 
 export const displayProjectPage = (project) => {

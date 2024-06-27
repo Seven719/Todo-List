@@ -160,6 +160,19 @@ main {
     padding-left: 1.7rem;
 }
 
+.project > button {
+    display: flex;
+    justify-content: space-between;
+}
+
+.project > button > img {
+    opacity: 0;
+}
+
+.project > button:hover > img {
+    opacity: 1;
+}
+
 input[type="checkbox"] {
     margin: 0.3rem;
 
