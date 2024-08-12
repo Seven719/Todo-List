@@ -39,6 +39,7 @@ footer {
 
 header,
 footer {
+    width: auto;
     background-color: var(--footer-header);
 }
 
