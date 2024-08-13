@@ -128,6 +128,7 @@ button:hover {
 }
 
 button > img,
+.task-actions > img,
 button > svg {
     height: 1.5rem;
     width: auto;
@@ -182,4 +183,23 @@ input[type="checkbox"] {
     -moz-transform: scale(var(--checkbox-size));
     -o-transform: scale(var(--checkbox-size));
     -ms-transform: scale(var(--checkbox-size));
+}
+
+#task-list {
+    width: 100%;
+}
+
+.task {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+}
+
+.task-actions > img {
+    opacity: 0;
+}
+
+.task:hover > .task-actions > img {
+    opacity: 1;
 }
