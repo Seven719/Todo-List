@@ -7,7 +7,6 @@ export default class Todo {
         this._dueDate = dueDate;
         this._priority = priority;
         this._notes = notes;
-        this._checked = false;
         this._completed = false;
         this._id = generateId();
     }
@@ -54,14 +53,6 @@ export default class Todo {
 
     set notes(value) {
         this._notes = value;
-    }
-
-    get checked() {
-        return this._checked;
-    }
-
-    set checked(value) {
-        this._checked = value;
     }
 
     get completed() {
