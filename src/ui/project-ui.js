@@ -25,7 +25,6 @@ const initProjectUI = (newProject) => {
     const deleteBtn = document.createElement('img')
 
     deleteBtn.src = Trash
-    deleteBtn.classList.add('delete-button')
     projectWrapper.classList.add('project');
     title.textContent = newProject.title;
 
