@@ -4,7 +4,7 @@ import Trash from "../images/trash.svg"
 const taskList = document.getElementById("task-list");
 const addTaskBtn = document.getElementById("button-add-task")
 
-const displayTodo = (todoItem, project, tmpTodo) => {
+const displayTodo = (todoItem, project) => {
     const todo = document.createElement("button");
     const checkbox = document.createElement("input");
     const label = document.createElement("label");
@@ -25,7 +25,7 @@ const displayTodo = (todoItem, project, tmpTodo) => {
     todo.classList.add("task");
     todo.append(taskDetails, taskActions);
 
-    deleteBtn.addEventListener('click', () => deleteTodo(todo, project, tmpTodo))
+    deleteBtn.addEventListener('click', () => deleteTodo(todo, project, todoItem))
 
     return todo;
 }
@@ -40,21 +40,20 @@ const addTodoListener = (project) => {
             "These are my notes",
         );
         project.addTodo(tmpTodo);
-        //Just passing in tmpTodo till it reaches deleteTodo
-        //Will refactor later
-        updateTodos(project, tmpTodo);
+        updateTodos(project);
     })
 };
 
-const deleteTodo = (todo, project, tmpTodo) => {
-    project.deleteTodo(tmpTodo);
-    taskList.removeChild(todo)
+const deleteTodo = (todo, project, todoItem) => {
+    project.deleteTodo(todoItem);
+    taskList.removeChild(todo);
 }
 
-const updateTodos = (project, tmpTodo) => {
+const updateTodos = (project) => {
     taskList.innerHTML = "";
+
     project.todoList.forEach(todo => {
-        taskList.append(displayTodo(todo, project, tmpTodo));
+        taskList.append(displayTodo(todo, project));
     });
 };
 
