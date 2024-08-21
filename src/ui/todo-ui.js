@@ -1,10 +1,15 @@
 import Todo from "../app/todo";
 import Trash from "../images/trash.svg"
 
+const form = document.querySelector("form");
+const closeModal = document.getElementById("modal-close");
+const modal = document.querySelector("dialog");
 const taskList = document.getElementById("task-list");
 const addTaskBtn = document.getElementById("button-add-task")
 
-const displayTodo = (todoItem, project) => {
+let project;
+
+const displayTodo = (todoItem) => {
     const todo = document.createElement("button");
     const checkbox = document.createElement("input");
     const label = document.createElement("label");
@@ -25,39 +30,67 @@ const displayTodo = (todoItem, project) => {
     todo.classList.add("task");
     todo.append(taskDetails, taskActions);
 
-    deleteBtn.addEventListener('click', () => deleteTodo(todo, project, todoItem))
+    deleteBtn.addEventListener('click', () => deleteTodo(todo, todoItem))
 
     return todo;
 }
 
-const addTodoListener = (project) => {
-    addTaskBtn.addEventListener("click", () => {
-        let tmpTodo = new Todo(
-            "title",
-            "description",
-            "12/8/2024",
-            "High",
-            "These are my notes",
-        );
-        project.addTodo(tmpTodo);
-        updateTodos(project);
-    })
-};
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-const deleteTodo = (todo, project, todoItem) => {
+    const title = getValueById("title");
+    const description = getValueById("description");
+    const dueDate = getValueById("due-date");
+    const priority = getValueById("priority");
+    const notes = getValueById("notes");
+
+    let todo = new Todo(
+        title,
+        description,
+        dueDate,
+        priority,
+        notes,
+    )
+
+    project.addTodo(todo);
+    updateTodos();
+
+    modal.close();
+    form.reset();
+})
+
+closeModal.addEventListener("click", (event) => {
+    event.preventDefault();
+    modal.close();
+})
+
+const addTodoListener = () => {
+    addTaskBtn.addEventListener("click", () => {
+        modal.showModal();
+        modal.classList.add('show-modal');
+    })
+}
+
+const deleteTodo = (todo, todoItem) => {
     project.deleteTodo(todoItem);
     taskList.removeChild(todo);
 }
 
-const updateTodos = (project) => {
+const updateTodos = () => {
     taskList.innerHTML = "";
 
     project.todoList.forEach(todo => {
-        taskList.append(displayTodo(todo, project));
-    });
-};
+        taskList.append(displayTodo(todo));
+    })
+}
 
-export const displayTodos = (project) => {
+export const displayTodos = (currentProject) => {
+    project = currentProject;
+
     taskList.innerHTML = "";
-    addTodoListener(project);
+    addTodoListener();
+}
+
+function getValueById(id) {
+    return document.getElementById(id).value;
 }

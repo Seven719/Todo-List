@@ -203,3 +203,10 @@ input[type="checkbox"] {
 .task:hover > .task-actions > img {
     opacity: 1;
 }
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
