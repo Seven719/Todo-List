@@ -1,96 +1,78 @@
 import Todo from "../app/todo";
 import Trash from "../images/trash.svg"
 
-const form = document.querySelector("form");
-const closeModal = document.getElementById("modal-close");
-const modal = document.querySelector("dialog");
-const taskList = document.getElementById("task-list");
-const addTaskBtn = document.getElementById("button-add-task")
-
+const todoList = document.getElementById("todo-list");
+const addTodoBtn = document.getElementById("button-add-todo")
 let project;
 
 const displayTodo = (todoItem) => {
     const todo = document.createElement("button");
     const checkbox = document.createElement("input");
     const label = document.createElement("label");
-    const deleteBtn = document.createElement("img");
-    const taskDetails = document.createElement("div");
-    const taskActions = document.createElement("div");
 
-    taskDetails.classList.add("task-details");
-    taskActions.classList.add("task-actions");
+    const date = document.createElement("input");
+    const deleteBtn = document.createElement("img");
+
+    const todoLeft= document.createElement("div");
+    const todoRight = document.createElement("div");
+
+    todoLeft.classList.add("todo-left");
+    todoRight.classList.add("todo-right");
 
     checkbox.type = "checkbox";
     label.textContent = todoItem.title;
-    taskDetails.append(checkbox, label);
+    label.contentEditable = true;
+    todoLeft.append(checkbox, label);
 
-    deleteBtn.src = Trash
-    taskActions.append(deleteBtn);
+    date.type = "date";
+    date.id = "due-date";
+    date.value = todoItem.dueDate || "";
 
-    todo.classList.add("task");
-    todo.append(taskDetails, taskActions);
+    deleteBtn.src = Trash;
+    todoRight.append(date, deleteBtn);
+
+    todo.classList.add("todo");
+    todo.append(todoLeft, todoRight);
+
+    label.addEventListener('input', () => {
+        todoItem.title = label.textContent;
+    });
+
+    date.addEventListener('input', () => {
+        todoItem.dueDate = date.value;
+    });
 
     deleteBtn.addEventListener('click', () => deleteTodo(todo, todoItem))
 
     return todo;
 }
 
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
+addTodoBtn.addEventListener("click", () => {
+    let tmpTodo = new Todo();
 
-    const title = getValueById("title");
-    const description = getValueById("description");
-    const dueDate = getValueById("due-date");
-    const priority = getValueById("priority");
-    const notes = getValueById("notes");
+    project.addTodo(tmpTodo);
+    updateTodos(project);
 
-    let todo = new Todo(
-        title,
-        description,
-        dueDate,
-        priority,
-        notes,
-    )
-
-    project.addTodo(todo);
-    updateTodos();
-
-    modal.close();
-    form.reset();
+    const todoLabel = todoList.querySelector(".todo:last-child label");
+    if (todoLabel) {
+        todoLabel.focus();
+    }
 })
-
-closeModal.addEventListener("click", (event) => {
-    event.preventDefault();
-    modal.close();
-})
-
-const addTodoListener = () => {
-    addTaskBtn.addEventListener("click", () => {
-        modal.showModal();
-        modal.classList.add('show-modal');
-    })
-}
 
 const deleteTodo = (todo, todoItem) => {
     project.deleteTodo(todoItem);
-    taskList.removeChild(todo);
+    todoList.removeChild(todo);
 }
 
 const updateTodos = () => {
-    taskList.innerHTML = "";
+    todoList.innerHTML = "";
 
     project.todoList.forEach(todo => {
-        taskList.append(displayTodo(todo));
+        todoList.append(displayTodo(todo));
     })
 }
 
 export const displayTodos = (currentProject) => {
     project = currentProject;
-
-    taskList.innerHTML = "";
-    addTodoListener();
-}
-
-function getValueById(id) {
-    return document.getElementById(id).value;
+    todoList.innerHTML = "";
 }

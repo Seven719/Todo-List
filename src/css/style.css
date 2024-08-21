@@ -128,7 +128,7 @@ button:hover {
 }
 
 button > img,
-.task-actions > img,
+.todo-right > img,
 button > svg {
     height: 1.5rem;
     width: auto;
@@ -185,28 +185,21 @@ input[type="checkbox"] {
     -ms-transform: scale(var(--checkbox-size));
 }
 
-#task-list {
+#todo-list {
     width: 100%;
 }
 
-.task {
+.todo {
     width: 100%;
     display: flex;
     justify-content: space-between;
     font-size: 1rem;
 }
 
-.task-actions > img {
+.todo-right > img {
     opacity: 0;
 }
 
-.task:hover > .task-actions > img {
+.todo:hover > .todo-right > img {
     opacity: 1;
-}
-
-dialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
