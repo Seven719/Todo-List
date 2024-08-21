@@ -34,6 +34,14 @@ const displayTodo = (todoItem) => {
     todo.classList.add("todo");
     todo.append(todoLeft, todoRight);
 
+    checkbox.addEventListener('click', () => {
+        if (checkbox.checked == true){
+            label.style.textDecoration = "line-through";
+        } else {
+            label.style.textDecoration = "none";
+        }
+    })
+
     label.addEventListener('input', () => {
         todoItem.title = label.textContent;
     });
