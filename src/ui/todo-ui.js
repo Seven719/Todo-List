@@ -2,13 +2,41 @@ import Todo from "../app/todo";
 import Trash from "../images/trash.svg"
 
 const todoList = document.getElementById("todo-list");
-const addTodoBtn = document.getElementById("button-add-todo")
-let project;
+let activeProject;
 
-const displayTodo = (todoItem) => {
+export const displayTodos = (project) => {
+    activeProject = project;
+    updateTodoPage(project);
+    addTodoListener();
+};
+
+const updateTodoPage = (project) => {
+    todoList.innerHTML = "";
+
+    project.todoList.forEach(todo => {
+        todoList.append(createTodoDOM(todo, project));
+    });
+}
+
+const addTodoListener = () => {
+    const addTodoBtn = document.getElementById("button-add-todo");
+
+    if (addTodoBtn) {
+        addTodoBtn.removeEventListener("click", handleAddTodo);
+        addTodoBtn.addEventListener("click", handleAddTodo);
+    }
+};
+
+function handleAddTodo() {
+    let tmpTodo = new Todo();
+    activeProject.addTodo(tmpTodo);
+    updateTodoPage(activeProject);
+}
+
+const createTodoDOM = (todoItem, project) => {
     const todo = document.createElement("button");
     const checkbox = document.createElement("input");
-    const label = document.createElement("label");
+    const title = document.createElement("input");
 
     const date = document.createElement("input");
     const deleteBtn = document.createElement("img");
@@ -20,9 +48,15 @@ const displayTodo = (todoItem) => {
     todoRight.classList.add("todo-right");
 
     checkbox.type = "checkbox";
-    label.textContent = todoItem.title;
-    label.contentEditable = true;
-    todoLeft.append(checkbox, label);
+
+    title.placeholder = "Enter something...";
+    if (todoItem.title == undefined) {
+        title.value = "";
+    } else {
+        title.value = todoItem.title;
+    }
+
+    todoLeft.append(checkbox, title);
 
     date.type = "date";
     date.id = "due-date";
@@ -36,51 +70,30 @@ const displayTodo = (todoItem) => {
 
     checkbox.addEventListener('click', () => {
         if (checkbox.checked == true){
-            label.style.textDecoration = "line-through";
+            title.style.textDecoration = "line-through";
         } else {
-            label.style.textDecoration = "none";
+            title.style.textDecoration = "none";
         }
     })
 
-    label.addEventListener('input', () => {
-        todoItem.title = label.textContent;
+    title.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            todoItem.title = title.value;
+            title.blur();
+        }
     });
 
     date.addEventListener('input', () => {
         todoItem.dueDate = date.value;
     });
 
-    deleteBtn.addEventListener('click', () => deleteTodo(todo, todoItem))
+    deleteBtn.addEventListener('click', () => deleteTodo(todo, todoItem, project))
 
     return todo;
 }
 
-addTodoBtn.addEventListener("click", () => {
-    let tmpTodo = new Todo();
-
-    project.addTodo(tmpTodo);
-    updateTodos(project);
-
-    const todoLabel = todoList.querySelector(".todo:last-child label");
-    if (todoLabel) {
-        todoLabel.focus();
-    }
-})
-
-const deleteTodo = (todo, todoItem) => {
+const deleteTodo = (todo, todoItem, project) => {
     project.deleteTodo(todoItem);
     todoList.removeChild(todo);
-}
-
-const updateTodos = () => {
-    todoList.innerHTML = "";
-
-    project.todoList.forEach(todo => {
-        todoList.append(displayTodo(todo));
-    })
-}
-
-export const displayTodos = (currentProject) => {
-    project = currentProject;
-    todoList.innerHTML = "";
 }

@@ -1,6 +1,6 @@
 import { Project, ProjectsManager } from "../app/project";
 import { displayTodos } from "./todo-ui";
-import Trash from "../images/trash.svg"
+import Trash from "../images/trash.svg";
 
 const addProject = document.getElementById("button-add-project");
 const projectsList = document.getElementById("projects-list");
@@ -64,7 +64,7 @@ const renameProjectListener = (project) => {
 
 const deleteProject = (project, projectWrapper) => {
     manageProjects.deleteProject(project);
-    projectsList.removeChild(projectWrapper)
+    projectsList.removeChild(projectWrapper);
 }
 
 export const displayProjectPage = (project) => {
