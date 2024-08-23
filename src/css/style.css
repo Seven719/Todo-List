@@ -19,7 +19,6 @@ html {
 }
 
 .container {
-	text-align: center;
 	height: 100%;
 	box-sizing: border-box;
 }
@@ -191,8 +190,9 @@ input[type="checkbox"] {
 
 .todo {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
     font-size: 1rem;
 }
 
@@ -200,6 +200,18 @@ input[type="checkbox"] {
     opacity: 0;
 }
 
-.todo:hover > .todo-right > img {
+.todo:hover > .todo-main > .todo-right > img {
     opacity: 1;
+}
+
+.todo-main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.todo-details {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    text-align: start;
 }
