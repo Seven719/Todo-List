@@ -59,6 +59,12 @@ const renameProjectListener = (project) => {
     projectTitle.parentNode.replaceChild(newProjectTitle, projectTitle);
     projectTitle = newProjectTitle;
 
+    newProjectTitle.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            newProjectTitle.blur();
+        }
+    });
+
     projectTitle.addEventListener('blur', updateTitle);
 }
 
