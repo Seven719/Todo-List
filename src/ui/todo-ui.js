@@ -118,8 +118,6 @@ const createPriorityDropdown = (todoItem, ...values) => {
         addListenersForProperties(todoItem, 'click', [temp, 'priority']);
     });
 
-    priority.style.width = "10%";
-
     return priority;
 }
 
@@ -131,9 +129,6 @@ const createDescription = (todoItem) => {
         description.value = todoItem.description;
     }
     description.placeholder = "Description...";
-
-    description.style.resize = "vertical";
-    description.style.minHeight = "80px";
 
     return description;
 }
