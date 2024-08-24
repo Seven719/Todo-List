@@ -1,5 +1,6 @@
 import { Project, ProjectsManager } from "../app/project";
 import { displayTodos } from "./todo-ui";
+import Trash from "../images/trash.svg";
 
 const addProject = document.getElementById("button-add-project");
 const projectsList = document.getElementById("projects-list");
@@ -23,7 +24,7 @@ const initProjectUI = (newProject) => {
     const title = document.createElement('p');
     const deleteBtn = document.createElement('img')
 
-    deleteBtn.src = "../images/trash.svg";
+    deleteBtn.src = Trash;
     projectWrapper.classList.add('project');
     title.textContent = newProject.title;
 

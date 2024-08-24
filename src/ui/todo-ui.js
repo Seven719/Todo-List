@@ -1,4 +1,5 @@
 import Todo from "../app/todo";
+import Trash from "../images/trash.svg";
 
 const todoList = document.getElementById("todo-list");
 let activeProject;
@@ -78,7 +79,7 @@ const createTodoDOM = (todoItem, project) => {
 const createDeleteBtn = (todo, todoItem, project) => {
     const deleteBtn = document.createElement("img");
 
-    deleteBtn.src = "../images/trash.svg";
+    deleteBtn.src = Trash;
 
     deleteBtn.addEventListener('click', () => deleteTodo(todo, todoItem, project))
 
