@@ -1,6 +1,5 @@
 import { Project, ProjectsManager } from "../app/project";
 import { displayTodos } from "./todo-ui";
-import Trash from "../images/trash.svg";
 
 const addProject = document.getElementById("button-add-project");
 const projectsList = document.getElementById("projects-list");
@@ -24,7 +23,7 @@ const initProjectUI = (newProject) => {
     const title = document.createElement('p');
     const deleteBtn = document.createElement('img')
 
-    deleteBtn.src = Trash
+    deleteBtn.src = "../images/trash.svg";
     projectWrapper.classList.add('project');
     title.textContent = newProject.title;
 
@@ -42,10 +41,10 @@ const updateProjects = () => {
 }
 
 const renameProjectListener = (project) => {
-    projectTitle.contentEditable = true;
+    projectTitle.contentEditable = "true";
 
-    if (project.title == "Inbox" || project.title == "Today" || project.title == "This Week") {
-        projectTitle.contentEditable = false;
+    if (project.title === "Inbox" || project.title === "Today" || project.title === "This Week") {
+        projectTitle.contentEditable = "false";
         return
     }
 
