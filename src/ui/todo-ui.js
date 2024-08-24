@@ -1,5 +1,4 @@
 import Todo from "../app/todo";
-import Trash from "../images/trash.svg"
 
 const todoList = document.getElementById("todo-list");
 let activeProject;
@@ -79,7 +78,7 @@ const createTodoDOM = (todoItem, project) => {
 const createDeleteBtn = (todo, todoItem, project) => {
     const deleteBtn = document.createElement("img");
 
-    deleteBtn.src = Trash;
+    deleteBtn.src = "../images/trash.svg";
 
     deleteBtn.addEventListener('click', () => deleteTodo(todo, todoItem, project))
 
@@ -108,7 +107,7 @@ const createPriorityDropdown = (todoItem, ...values) => {
 
         temp.value = element;
 
-        if (todoItem.priority == temp.value) {
+        if (todoItem.priority === temp.value) {
             temp.selected = true;
         }
 
@@ -125,7 +124,7 @@ const createDescription = (todoItem) => {
     const description = document.createElement("textarea");
 
     description.value = "";
-    if (todoItem.description != undefined) {
+    if (todoItem.description !== undefined) {
         description.value = todoItem.description;
     }
     description.placeholder = "Description...";
@@ -138,7 +137,7 @@ const createCheckbox = (todoItem, title) => {
     checkbox.type = "checkbox";
 
     checkbox.checked = todoItem.completed;
-    if (checkbox.checked == true){
+    if (checkbox.checked === true){
         title.style.textDecoration = "line-through";
     } else {
         title.style.textDecoration = "none";
@@ -151,7 +150,7 @@ const createTitle = (todoItem) => {
     const title = document.createElement("input");
 
     title.placeholder = "Enter something...";
-    if (todoItem.title == undefined) {
+    if (todoItem.title === undefined) {
         title.value = "";
     } else {
         title.value = todoItem.title;
@@ -214,7 +213,7 @@ const manageTodoListeners = (todoItem,
     });
 
     checkbox.addEventListener('click', () => {
-        if (checkbox.checked == true){
+        if (checkbox.checked === true){
             title.style.textDecoration = "line-through";
         } else {
             title.style.textDecoration = "none";
