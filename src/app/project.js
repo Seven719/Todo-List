@@ -38,7 +38,7 @@ export class Project {
 
 export class ProjectsManager {
     constructor () {
-        this._projectList = [];
+        this._projectList = this.loadLocalStorage();
     }
 
     get projectList() {
@@ -47,13 +47,29 @@ export class ProjectsManager {
 
     set projectList(value) {
         this._projectList = value;
+        this.saveToLocalStorage()
     }
 
     deleteProject(remove) {
         this.projectList = this.projectList.filter(project => project.id !== remove.id);
+        this.saveToLocalStorage()
     }
 
     addProject(project) {
         this.projectList = [...this.projectList, project];
+        this.saveToLocalStorage()
+    }
+
+    saveToLocalStorage() {
+        localStorage.setItem('projectList', JSON.stringify(this.projectList));
+    }
+
+    loadLocalStorage() {
+        const projectsSaved = JSON.parse(localStorage.getItem('projectList'));
+        if (projectsSaved) {
+            return projectsSaved.map(projectData => Object.assign(new Project(), projectData));
+        }
+
+        return [];
     }
 }
