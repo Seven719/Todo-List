@@ -13,6 +13,7 @@ export class Project {
 
     set title(value) {
         this._title = value;
+        this.saveToLocalStorage()
     }
 
     get id() {
@@ -25,14 +26,30 @@ export class Project {
 
     set todoList(value) {
         this._todos = value;
+        this.saveToLocalStorage()
     }
 
     deleteTodo(remove) {
         this.todoList = this.todoList.filter(todo => todo.id !== remove.id);
+        this.saveToLocalStorage()
     }
 
     addTodo(todo) {
         this.todoList = [...this.todoList, todo];
+        this.saveToLocalStorage()
+    }
+
+    saveToLocalStorage() {
+        let projectsSaved = JSON.parse(localStorage.getItem('projectList')) || [];
+        let index = projectsSaved.findIndex(project => project._id === this._id);
+
+        if (index !== -1) {
+            projectsSaved[index] = { ...projectsSaved[index], ...this };
+        } else {
+            projectsSaved.push(this);
+        }
+
+        localStorage.setItem('projectList', JSON.stringify(projectsSaved));
     }
 }
 
@@ -65,11 +82,7 @@ export class ProjectsManager {
     }
 
     loadLocalStorage() {
-        const projectsSaved = JSON.parse(localStorage.getItem('projectList'));
-        if (projectsSaved) {
-            return projectsSaved.map(projectData => Object.assign(new Project(), projectData));
-        }
-
-        return [];
+        const projectsSaved = JSON.parse(localStorage.getItem('projectList')) || [];
+        return projectsSaved.map(projectData => Object.assign(new Project(), projectData));
     }
 }
