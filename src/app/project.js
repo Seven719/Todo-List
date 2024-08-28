@@ -1,4 +1,5 @@
 import generateId from "./id";
+import Todo from "./todo";
 
 export class Project {
     constructor (title) {
@@ -40,8 +41,8 @@ export class Project {
     }
 
     saveToLocalStorage() {
-        let projectsSaved = JSON.parse(localStorage.getItem('projectList')) || [];
-        let index = projectsSaved.findIndex(project => project._id === this._id);
+        const projectsSaved = JSON.parse(localStorage.getItem('projectList')) || [];
+        const index = projectsSaved.findIndex(project => project._id === this._id);
 
         if (index !== -1) {
             projectsSaved[index] = { ...projectsSaved[index], ...this };
@@ -83,6 +84,10 @@ export class ProjectsManager {
 
     loadLocalStorage() {
         const projectsSaved = JSON.parse(localStorage.getItem('projectList')) || [];
-        return projectsSaved.map(projectData => Object.assign(new Project(), projectData));
+        return projectsSaved.map(projectData => {
+            const project = Object.assign(new Project(), projectData);
+            project._todos = projectData._todos.map(todoData => Object.assign(new Todo(), todoData));
+            return project;
+        });
     }
 }
