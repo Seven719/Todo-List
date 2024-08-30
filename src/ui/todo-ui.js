@@ -1,5 +1,6 @@
 import Todo from "../app/todo";
 import Trash from "../images/trash.svg";
+import Plus from "../images/plus.svg";
 
 const todoList = document.getElementById("todo-list");
 let activeProject;
@@ -7,7 +8,7 @@ let activeProject;
 export const displayTodos = (project) => {
     activeProject = project;
     updateTodoPage(project);
-    addTodoListener();
+    updateAddTodo(project);
 };
 
 const updateTodoPage = (project) => {
@@ -18,9 +19,41 @@ const updateTodoPage = (project) => {
     });
 }
 
-const addTodoListener = () => {
-    const addTodoBtn = document.getElementById("button-add-todo");
+const createTodoBtn = () => {
+    const main = document.querySelector("main");
 
+    const addTodoBtn = document.createElement("button");
+    addTodoBtn.id = "button-add-todo";
+
+    const plusLogo = document.createElement("img");
+    plusLogo.src = Plus;
+    plusLogo.alt = "Add Todo";
+
+    const text = document.createElement("p");
+    text.textContent = "Add Todo";
+
+    main.appendChild(addTodoBtn);
+    addTodoBtn.append(plusLogo, text);
+
+    addTodoListener(addTodoBtn);
+}
+
+const updateAddTodo = (project) => {
+    const addTodoBtn = document.getElementById("button-add-todo");
+    if (project.title === "Today" || project.title === "This Week") {
+        if (addTodoBtn) {
+            addTodoBtn.remove();
+        }
+        return;
+    }
+
+    if (addTodoBtn) {
+        return;
+    }
+    createTodoBtn();
+}
+
+const addTodoListener = (addTodoBtn) => {
     if (addTodoBtn) {
         addTodoBtn.removeEventListener("click", handleAddTodo);
         addTodoBtn.addEventListener("click", handleAddTodo);
@@ -44,6 +77,7 @@ const createTodoDOM = (todoItem, project) => {
     const description = createDescription(todoItem);
 
     const title = createTitle(todoItem);
+
     const checkbox = createCheckbox(todoItem, title);
     const details = createDetails(priority, description);
 
@@ -196,7 +230,6 @@ const addListenersForProperties = (todoItem, eventType, ...entries) => {
         });
     });
 }
-
 
 const manageTodoListeners = (todoItem,
     checkbox,
