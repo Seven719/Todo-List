@@ -41,6 +41,8 @@ const updateProjects = () => {
     manageProjects.projectList.forEach(initProjectUI);
 }
 
+updateProjects();
+
 const renameProjectListener = (project) => {
     projectTitle.contentEditable = "true";
 
