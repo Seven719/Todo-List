@@ -1,0 +1,245 @@
+:root {
+    --footer-header: #A6A6A6;
+    --sidebar: #D9D9D9;
+    --background: #F3F5F0;
+    --button-hover: #c4c2c2;
+    --checkbox-size: 1.3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+	height: 100%;
+	color: black;
+    background-color: var(--background);
+}
+
+.container {
+	height: 100%;
+	box-sizing: border-box;
+}
+
+header {
+	grid-column: 1 / 3;
+}
+
+nav {
+	background-color: var(--sidebar);
+	grid-row: 2 / 3;
+}
+
+footer {
+	grid-column: 1 / 3;
+}
+
+header,
+footer {
+    width: auto;
+    background-color: var(--footer-header);
+}
+
+.container {
+	display: grid;
+	grid-template-columns: 0.6fr 3fr;
+	grid-template-rows: 0.8fr 6fr 0.6fr;
+}
+
+html,
+body {
+    font-family: "Ubuntu", sans-serif;
+
+}
+
+/*HEADER*/
+header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 0.5rem;
+}
+
+header > h1 {
+    margin-top: 0.5rem;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 3rem;
+}
+
+header > img {
+    height: 4rem;
+    color: black;
+    width: auto;
+}
+
+/*FOOTER*/
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer > a {
+    display: inline-block;
+}
+
+footer > a > img {
+    margin-left: 1rem;
+    height: 2.3rem;
+    width: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+footer > a > img:hover {
+    transform: rotate(360deg);
+}
+
+/*SIDEBAR*/
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 1rem;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    border: none;
+    background: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+}
+
+button,
+ul,
+li {
+    width: 100%;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: var(--button-hover);
+}
+
+button > img,
+.todo-right > img,
+button > svg {
+    height: 1.5rem;
+    width: auto;
+    margin-right: 0.2rem;
+}
+
+li {
+    list-style-type: none;
+}
+
+button > p {
+    font-size: 1.1rem;
+}
+
+#projects-title {
+    margin: 1rem 0;
+}
+
+/*MAIN*/
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.project > button > p {
+    padding-left: 1.7rem;
+}
+
+.project > button {
+    display: flex;
+    justify-content: space-between;
+}
+
+.project > button > img {
+    opacity: 0;
+}
+
+.project > button:hover > img {
+    opacity: 1;
+}
+
+input[type="checkbox"] {
+    margin: 0.3rem;
+
+    transform: scale(var(--checkbox-size));
+    -webkit-transform: scale(var(--checkbox-size));
+    -moz-transform: scale(var(--checkbox-size));
+    -o-transform: scale(var(--checkbox-size));
+    -ms-transform: scale(var(--checkbox-size));
+}
+
+#todo-list {
+    width: 100%;
+}
+
+.todo {
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+    font-size: 1rem;
+}
+
+.todo-right > img {
+    opacity: 0;
+    margin-top: -3px;
+    margin-left: 3px;
+}
+
+.todo:hover > .todo-main > .todo-right > img {
+    opacity: 1;
+}
+
+.todo-main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo-left,
+.todo-right {
+    display: flex;
+    align-items: center;
+}
+
+.todo-details {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    text-align: start;
+    gap: 0.3rem;
+}
+
+.todo-details select {
+    margin-top: 5px;
+}
+
+.todo-details > select {
+    width: 10%;
+}
+
+.todo-details > textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+textarea:focus,
+input:focus {
+    outline: thin solid blue;
+}
