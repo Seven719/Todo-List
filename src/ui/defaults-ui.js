@@ -33,4 +33,4 @@ manageProjects.projectList.forEach(project => {
     if (project.title === "Inbox") {
         displayProjectPage(project);
     }
-});
+})

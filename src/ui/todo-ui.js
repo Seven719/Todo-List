@@ -126,7 +126,7 @@ const deleteTodo = (todo, todoItem) => {
     todoList.removeChild(todo);
 }
 
-const removeOverlappingEventListener = (...elements) => {
+export const removeOverlappingEventListener = (...elements) => {
     elements.forEach(element => {
         element.addEventListener('click', (event) => {
             event.stopPropagation();

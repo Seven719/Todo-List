@@ -1,6 +1,7 @@
 import { Project, ProjectsManager } from "../app/project";
 import { displayTodos } from "./todo-ui";
 import Trash from "../images/trash.svg";
+import { removeOverlappingEventListener } from "./todo-ui";
 
 const addProject = document.getElementById("button-add-project");
 const projectsList = document.getElementById("projects-list");
@@ -31,6 +32,8 @@ const initProjectUI = (newProject) => {
     projectsList.append(projectWrapper);
     projectWrapper.append(project);
     project.append(title, deleteBtn);
+
+    removeOverlappingEventListener(project, deleteBtn);
 
     project.addEventListener('click', () => displayProjectPage(newProject));
     deleteBtn.addEventListener('click', () => deleteProject(newProject, projectWrapper))
@@ -77,6 +80,12 @@ const renameProjectListener = (project) => {
 const deleteProject = (project, projectWrapper) => {
     manageProjects.deleteProject(project);
     projectsList.removeChild(projectWrapper);
+
+    manageProjects.projectList.forEach(projects => {
+        if (projects.title === "Inbox") {
+            displayProjectPage(projects);
+        }
+    })
 }
 
 export const displayProjectPage = (project) => {
