@@ -1,3 +1,4 @@
+import { isToday, toDate, isThisWeek, addDays } from "date-fns";
 import generateId from "./id";
 import Todo from "./todo";
 
@@ -52,6 +53,7 @@ export class Project {
 
         localStorage.setItem('projectList', JSON.stringify(projectsSaved));
     }
+
 }
 
 export class ProjectsManager {
@@ -69,6 +71,10 @@ export class ProjectsManager {
     }
 
     deleteProject(remove) {
+        remove.todoList.forEach(todo => {
+            this.deleteTodoFromAllProjects(todo.id);
+        });
+
         this.projectList = this.projectList.filter(project => project.id !== remove.id);
         this.saveToLocalStorage()
     }
@@ -89,5 +95,31 @@ export class ProjectsManager {
             project._todos = projectData._todos.map(todoData => Object.assign(new Todo(), todoData));
             return project;
         });
+    }
+
+    getTodoToday() {
+       return this._projectList.flatMap((project) => {
+            return project.todoList.filter(todo => isToday(toDate(todo.dueDate)))
+        })
+    }
+
+    getTodosThisWeek() {
+        return this._projectList.flatMap((project) => {
+            return project.todoList.filter(todo => isThisWeek(addDays(toDate(todo.dueDate), 1)))
+        })
+    }
+
+    findProjectByTodoId(todoId) {
+        return this._projectList.find(project =>
+            project.todoList.some(todo => todo.id === todoId)
+        );
+    }
+
+    deleteTodoFromAllProjects(todoId) {
+        const project = this.findProjectByTodoId(todoId);
+        if (project) {
+            project.deleteTodo({ id: todoId });
+            this.saveToLocalStorage();
+        }
     }
 }

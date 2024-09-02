@@ -1,6 +1,7 @@
 import Todo from "../app/todo";
 import Trash from "../images/trash.svg";
 import Plus from "../images/plus.svg";
+import { manageProjects } from "./project-ui";
 
 const todoList = document.getElementById("todo-list");
 let activeProject;
@@ -120,8 +121,8 @@ const createDeleteBtn = (todo, todoItem, project) => {
     return deleteBtn;
 }
 
-const deleteTodo = (todo, todoItem, project) => {
-    project.deleteTodo(todoItem);
+const deleteTodo = (todo, todoItem) => {
+    manageProjects.deleteTodoFromAllProjects(todoItem.id);
     todoList.removeChild(todo);
 }
 

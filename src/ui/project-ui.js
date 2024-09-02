@@ -6,7 +6,7 @@ const addProject = document.getElementById("button-add-project");
 const projectsList = document.getElementById("projects-list");
 let projectTitle = document.getElementById("project-title");
 
-const manageProjects = new ProjectsManager();
+export const manageProjects = new ProjectsManager();
 
 addProject.addEventListener('click', () => {
     createProject();
@@ -38,7 +38,11 @@ const initProjectUI = (newProject) => {
 
 const updateProjects = () => {
     projectsList.innerHTML = "";
-    manageProjects.projectList.forEach(initProjectUI);
+    manageProjects.projectList.forEach((newProject) => {
+        if (newProject.title !== "Today" && newProject.title !== "This Week" && newProject.title !== "Inbox") {
+            initProjectUI(newProject);
+        }
+    });
 }
 
 updateProjects();
@@ -78,5 +82,14 @@ const deleteProject = (project, projectWrapper) => {
 export const displayProjectPage = (project) => {
     projectTitle.textContent = project.title;
     renameProjectListener(project);
-    displayTodos(project);
+
+    if (project.title === "Today") {
+        const todosToday = manageProjects.getTodoToday();
+        displayTodos({ title: "Today", todoList: todosToday });
+    } else if (project.title === "This Week") {
+        const todosThisWeek = manageProjects.getTodosThisWeek();
+        displayTodos({ title: "This Week", todoList: todosThisWeek });
+    } else {
+        displayTodos(project);
+    }
 }
