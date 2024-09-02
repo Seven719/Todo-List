@@ -1,4 +1,4 @@
-import { isToday, toDate, isThisWeek, addDays } from "date-fns";
+import { isToday, toDate, isThisWeek, subDays } from "date-fns";
 import generateId from "./id";
 import Todo from "./todo";
 
@@ -105,7 +105,7 @@ export class ProjectsManager {
 
     getTodosThisWeek() {
         return this._projectList.flatMap((project) => {
-            return project.todoList.filter(todo => isThisWeek(addDays(toDate(todo.dueDate), 1)))
+            return project.todoList.filter(todo => isThisWeek(subDays(toDate(todo.dueDate), 1)))
         })
     }
 
